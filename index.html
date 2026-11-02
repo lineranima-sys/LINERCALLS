@@ -3,12 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LinerCall's - Plataforma Online & RPG</title>
+    <title>LinerCall's - Oficial</title>
 </head>
 <body>
 
-    <!-- 🔐 TELA DE AUTENTICAÇÃO DUPLA (SENHA + GMAIL) -->
+    <!-- 🔐 TELA DE AUTENTICAÇÃO DUPLA -->
     <div id="lock-screen">
+        <!-- ETAPA 1: SENHA DO SERVIDOR -->
         <div class="lock-box" id="step-1-box">
             <h2>LINERCALL'S 🔐</h2>
             <p class="box-desc">Código de Acesso do Servidor</p>
@@ -16,6 +17,7 @@
             <button class="primary-btn" id="btn-validar-servidor">Verificar Credencial</button>
         </div>
 
+        <!-- ETAPA 2: LOGIN GMAIL -->
         <div class="lock-box" id="step-2-box" style="display: none; border-color: #ea4335;">
             <h2 style="color: #ea4335;">LOGIN GMAIL 📧</h2>
             <p class="box-desc">Conecte sua conta para sincronizar o chat e seus personagens</p>
@@ -28,7 +30,7 @@
     <!-- TRILHA EM LOOP -->
     <audio id="bg-music" loop src="https://soundhelix.com"></audio>
 
-    <!-- 🌐 PAINEL PRINCIPAL DO LINERCALL'S -->
+    <!-- 🌐 PAINEL LATERAL CIANO -->
     <div class="sidebar">
         <div class="brand">LinerCall's</div>
         
@@ -68,39 +70,36 @@
             </div>
         </div>
 
-        <!-- 2. ABA MODO HISTÓRIA (RPG DE ESCOLHAS) -->
+        <!-- 2. ABA MODO HISTÓRIA -->
         <div id="panel-jogar" class="view-panel">
             <h2 class="panel-title">Campanhas de Roleplay</h2>
-            <p class="panel-subtitle">Sua jornada atual através dos reinos do LinerCall's.</p>
+            <p class="panel-subtitle">Sua jornada através dos reinos do LinerCall's.</p>
             <div class="dashboard-box text-left">
                 <h3 id="story-chapter-title" style="color:var(--cyan-glow); margin-bottom:10px;">Capítulo 1: O Despertar</h3>
-                <div class="story-text-container" id="story-display-text">
-                    Você acorda em uma taverna escura e fria. O estalajadeiro olha para você de forma suspeita enquanto limpa um copo. Um mapa antigo está estendido na mesa ao lado. O que você deseja fazer?
-                </div>
+                <div class="story-text-container" id="story-display-text">Carregando crônicas...</div>
                 <div class="story-choices-wrapper" id="story-choices-box" style="margin-top:20px; display:flex; flex-direction:column; gap:10px;"></div>
             </div>
         </div>
 
-        <!-- 3. ABA ARENA PVP (BATALHA CONTRA QUEM ESTÁ ONLINE) -->
+        <!-- 3. ABA ARENA PVP -->
         <div id="panel-arena" class="view-panel">
             <h2 class="panel-title">Arena de Duelos PVP</h2>
-            <p class="panel-subtitle">Desafie apenas os membros que estão com sessão ativa na rede agora.</p>
+            <p class="panel-subtitle">Desafie os membros ativos no servidor.</p>
             <div style="display: flex; gap: 20px; flex-wrap: wrap;">
                 <div class="dashboard-box" style="flex: 1; min-width: 300px;">
                     <h3 style="font-size: 16px; margin-bottom: 15px; color: var(--cyan-glow);">Jogadores Online na Arena</h3>
                     <div id="arena-online-list" style="display:flex; flex-direction:column; gap:10px;"></div>
                 </div>
                 <div class="dashboard-box" style="flex: 1; min-width: 300px;">
-                    <h3 style="font-size: 16px; margin-bottom: 15px; color: var(--cyan-glow);">Histórico de Combates da Arena</h3>
-                    <div class="console-log" id="arena-battle-log">>> Aguardando início de um duelo...</div>
+                    <h3 style="font-size: 16px; margin-bottom: 15px; color: var(--cyan-glow);">Histórico de Combates</h3>
+                    <div class="console-log" id="arena-battle-log">>> Pronto para iniciar duelos...</div>
                 </div>
             </div>
         </div>
 
         <!-- 4. ABA DE RANKING -->
         <div id="panel-ranking" class="view-panel">
-            <h2 class="panel-title">Placar Geral de Heróis</h2>
-            <p class="panel-subtitle">Classificação em tempo real baseada em duelos PVP oficiais.</p>
+            <h2>🏆 Placar Geral de Heróis</h2>
             <div class="ranking-grid" style="margin-top:20px;">
                 <div class="ranking-row ranking-header"><div>Posição</div><div>Nome do Player</div><div>Vitórias PvP</div><div>Derrotas PvP</div></div>
                 <div id="ranking-rows-container"></div>
@@ -195,13 +194,10 @@
     .primary-btn { background: linear-gradient(135deg, var(--cyan-glow), var(--cyan-dark)); color: #06080c; border: none; padding: 12px; border-radius: 6px; cursor: pointer; font-weight: bold; width: 100%; text-transform: uppercase; letter-spacing: 0.5px; transition: 0.2s; }
     label { font-size: 13px; color: var(--text-muted); font-weight: bold; display: block; margin-bottom: 6px; }
 </style>
-    <!-- Script do Jitsi Meet para Chamadas de Voz Corporativas -->
-    <script src="https://jit.si"></script>
-
     <script>
         let currentEmail = "", jitsiAPI = null;
 
-        // Estrutura complexa do Roleplay (Modo História)
+        // Árvore do Jogo (Campanha do Modo História de Escolhas)
         const storyCampaign = {
             start: {
                 title: "Capítulo 1: O Despertar na Taverna",
@@ -244,7 +240,7 @@
             }
         };
 
-        // Escutadores nativos blindados (Rodam direto na inicialização da página)
+        // Escutadores nativos blindados (Garantem o funcionamento dos cliques imediatamente)
         window.addEventListener('DOMContentLoaded', () => {
             document.getElementById('btn-validar-servidor').addEventListener('click', verifyServerKey);
             document.getElementById('btn-entrar-plataforma').addEventListener('click', verifyGmailAccount);
@@ -265,7 +261,7 @@
                 if (e.key === 'Enter') pushOnlineMessage();
             });
             
-            // Inicializa a árvore do jogo no painel principal
+            // Inicializa a árvore do jogo de escolhas
             loadStoryNode('start');
         });
 
@@ -295,7 +291,7 @@
             currentEmail = email.replace(/[^a-zA-Z0-9]/g, "_");
             document.getElementById('lock-screen').style.display = 'none';
             
-            // Inicializa a conta isolada na memória local/nuvem híbrida
+            // Cria a conta isolada no histórico limpo
             let localDataset = localStorage.getItem(currentEmail);
             if (!localDataset) {
                 let chatNick = prompt("Digite seu apelido exclusivo do Chat:");
@@ -304,7 +300,7 @@
                     email: email,
                     profileName: chatNick || "Membro",
                     gameName: gameNick || "Guerreiro",
-                    wins: 0, losses: 0, messages: []
+                    wins: 0, losses: 0
                 }));
                 
                 let directory = JSON.parse(localStorage.getItem('liner_idx')) || [];
@@ -332,40 +328,58 @@
             let d = JSON.parse(localStorage.getItem(currentEmail));
             if(!d) return;
             document.getElementById('game-char-name').innerText = "⚔️ " + d.gameName;
-            document.getElementById('p-wins').innerText = d.wins;
-            document.getElementById('p-losses').innerText = d.losses;
-            document.getElementById('config-profile-name').value = d.profileName;
-            document.getElementById('config-game-name').value = d.gameName;
+            document.getElementById('p-wins').innerText = d.wins || 0;
+            document.getElementById('p-losses').innerText = d.losses || 0;
+            document.getElementById('config-profile-name').value = d.profileName || "";
+            document.getElementById('config-game-name').value = d.gameName || "";
 
             let idx = JSON.parse(localStorage.getItem('liner_idx')) || [];
             let rBox = document.getElementById('ranking-rows-container'); rBox.innerHTML = "";
             let aBox = document.getElementById('arena-online-list'); aBox.innerHTML = "";
 
-            idx.forEach((em, i) => {
-                let p = JSON.parse(localStorage.getItem(em));
-                if(p) {
-                    rBox.innerHTML += `<div class="ranking-row"><div>${i+1}º</div><div><b>${p.gameName}</b></div><div style="color:#2ecc71;">🟩 ${p.wins}</div><div style="color:#e74c3c;">🟥 ${p.losses}</div></div>`;
-                    if(em !== currentEmail) {
-                        aBox.innerHTML += `<div class="pvp-user-card"><span>⚔️ <b>${p.gameName}</b></span><button class="duel-btn" onclick="triggerDuel('${em}')">Desafiar</button></div>`;
-                    }
+            // Organiza o placar de líderes
+            let jogadores = [];
+            idx.forEach(em => { let p = JSON.parse(localStorage.getItem(em)); if(p) jogadores.push(p); });
+            jogadores.sort((a, b) => (b.wins || 0) - (a.wins || 0));
+
+            jogadores.forEach((p, i) => {
+                rBox.innerHTML += `<div class="ranking-row"><div>${i+1}º</div><div><b>${p.gameName}</b></div><div style="color:#2ecc71;">🟩 ${p.wins || 0}</div><div style="color:#e74c3c;">🟥 ${p.losses || 0}</div></div>`;
+                let pId = p.email.replace(/[^a-zA-Z0-9]/g, "_");
+                if(pId !== currentEmail) {
+                    aBox.innerHTML += `<div class="pvp-user-card"><span>⚔️ <b>${p.gameName}</b> (Online)</span><button class="duel-btn" data-opponent="${pId}">Desafiar</button></div>`;
                 }
             });
-            if(!aBox.innerHTML) aBox.innerHTML = "<div style='color:var(--text-muted); font-size:13px;'>Nenhum oponente ativo no navegador...</div>";
+
+            // Adiciona ouvinte seguro nos botões de duelo gerados
+            document.querySelectorAll('.duel-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    triggerDuel(this.getAttribute('data-opponent'));
+                });
+            });
+
+            if(!aBox.innerHTML) aBox.innerHTML = "<div style='color:var(--text-muted); font-size:13px;'>Nenhum oponente registrado no navegador...</div>";
         }
 
         function triggerDuel(oppId) {
             let me = JSON.parse(localStorage.getItem(currentEmail));
             let opp = JSON.parse(localStorage.getItem(oppId));
+            if(!me || !opp) return;
+
             let log = document.getElementById('arena-battle-log');
             let myRoll = Math.floor(Math.random() * 20) + 1;
             let oppRoll = Math.floor(Math.random() * 20) + 1;
 
-            log.innerHTML += `<br>⚔️ <b>Duelo:</b> Você vs ${opp.gameName}<br>🎲 Seu d20: ${myRoll} | Inimigo: ${oppRoll}`;
-            if(myRoll >= oppRoll) { me.wins++; log.innerHTML += "<br><span style='color:#2ecc71;'>[VITÓRIA]</span> Ganhou!"; }
-            else { me.losses++; log.innerHTML += "<br><span style='color:#ff4d4d;'>[DERROTA]</span> Perdeu!"; }
+            log.innerHTML += `<br>⚔️ <b>Duelo Ativo:</b> Você vs ${opp.gameName}<br>🎲 Seu d20: ${myRoll} | Oponente: ${oppRoll}`;
+            
+            if(myRoll >= oppRoll) { 
+                me.wins = (me.wins || 0) + 1; 
+                log.innerHTML += "<br><span style='color:#2ecc71;'>[VITÓRIA]</span> Seu golpe superou a defesa adversária!"; 
+            } else { 
+                me.losses = (me.losses || 0) + 1; 
+                log.innerHTML += "<br><span style='color:#ff4d4d;'>[DERROTA]</span> Você foi atingido por um contra-ataque!"; 
+            }
             
             localStorage.setItem(currentEmail, JSON.stringify(me));
-            localStorage.setItem(oppId, JSON.stringify(opp));
             refreshInterfaceData();
             log.scrollTop = log.scrollHeight;
         }
@@ -393,7 +407,14 @@
             let b = document.getElementById('voice-box'); b.style.display = 'block'; b.innerHTML = "";
             document.getElementById('call-join-trigger').style.display = 'none';
             document.getElementById('call-leave-trigger').style.display = 'block';
-            jitsiAPI = new JitsiMeetExternalAPI("meet.jit.si", { roomName: "LinerCall_Voice_2026", width: "100%", height: "100%", parentNode: b });
+            
+            // Injeção dinâmica assíncrona da API de voz para evitar travas locais
+            const script = document.createElement('script');
+            script.src = "https://jit.si";
+            script.onload = () => {
+                jitsiAPI = new JitsiMeetExternalAPI("meet.jit.si", { roomName: "LinerCall_Voice_Channel_Secure_2026", width: "100%", height: "100%", parentNode: b });
+            };
+            document.head.appendChild(script);
         }
 
         function disconnectJitsiVoice() {
@@ -405,11 +426,12 @@
 
         function toggleBackgroundTrack() { let t = document.getElementById('bg-music'); t.paused ? t.play().catch(()=>{}) : t.pause(); }
         function switchInterfaceColors() { document.body.classList.toggle('light-mode'); }
+        
         function saveCloudSettings() {
             let d = JSON.parse(localStorage.getItem(currentEmail));
             d.profileName = document.getElementById('config-profile-name').value;
             d.gameName = document.getElementById('config-game-name').value;
-            localStorage.setItem(currentEmail, JSON.stringify(d)); alert("Perfil Atualizado!");
+            localStorage.setItem(currentEmail, JSON.stringify(d)); alert("Perfil Atualizado!"); refreshInterfaceData();
         }
         function disconnectUserSession() { currentEmail = ""; document.getElementById('lock-screen').style.display = 'flex'; }
     </script>
