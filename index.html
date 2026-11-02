@@ -3,419 +3,173 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LinerCall's - Interface Gamer Premium</title>
+    <title>LinerCall's - Oficial</title>
     <style>
         :root {
-            --bg-darkest: #0a0c10;
-            --bg-panel: #131722;
-            --bg-card: #1c2333;
-            --cyan-glow: #00f2fe;
-            --cyan-dark: #0097a7;
-            --text-white: #ffffff;
-            --text-muted: #707e94;
-            --red-alert: #ff4d4d;
+            --bg-darkest: #0a0c10; --bg-panel: #131722; --bg-card: #1c2333;
+            --cyan-glow: #00f2fe; --cyan-dark: #0097a7; --text-white: #ffffff;
+            --text-muted: #707e94; --red-alert: #ff4d4d;
         }
+        .light-mode {
+            --bg-darkest: #f2f3f5; --bg-sidebar: #e3e5e8; --bg-card: #ffffff;
+            --text-white: #000000; --text-muted: #4e5058; --cyan-glow: #0097a7;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: sans-serif; }
+        body { background-color: var(--bg-darkest); color: var(--text-white); display: flex; height: 100vh; overflow: hidden; }
+        
+        #lock-screen { position: fixed; inset: 0; background: #0a0c10; display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 9999; }
+        .lock-box { background: var(--bg-panel); padding: 40px; border-radius: 12px; text-align: center; border: 2px solid var(--cyan-glow); width: 90%; max-width: 380px; }
+        
+        .sidebar { width: 260px; background-color: var(--bg-panel); display: flex; flex-direction: column; padding: 20px 15px; border-right: 1px solid rgba(255, 255, 255, 0.05); }
+        .brand { font-size: 22px; font-weight: bold; color: var(--cyan-glow); text-align: center; padding-bottom: 20px; border-bottom: 1px solid rgba(255, 255, 255, 0.1); text-transform: uppercase; letter-spacing: 1.5px; }
+        .section-title { font-size: 11px; color: var(--text-muted); text-transform: uppercase; margin: 25px 0 10px; font-weight: bold; }
+        .nav-btn { background: none; border: none; color: var(--text-muted); text-align: left; padding: 12px 15px; border-radius: 8px; cursor: pointer; width: 100%; font-size: 14px; display: flex; align-items: center; gap: 12px; }
+        .nav-btn:hover { color: var(--text-white); background: rgba(255, 255, 255, 0.03); }
+        .nav-btn.active { background: rgba(0, 242, 254, 0.1); color: var(--cyan-glow); border-left: 4px solid var(--cyan-glow); border-radius: 0 8px 8px 0; }
 
-        * { 
-            margin: 0; 
-            padding: 0; 
-            box-sizing: border-box; 
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
-        }
+        .main-content { flex: 1; display: flex; flex-direction: column; background: var(--bg-darkest); }
+        .view-panel { flex: 1; display: none; padding: 30px; flex-direction: column; overflow-y: auto; }
+        .view-panel.active-panel { display: flex; }
 
-        body { 
-            background-color: var(--bg-darkest); 
-            color: var(--text-white); 
-            display: flex; 
-            height: 100vh; 
-            overflow: hidden; 
-        }
-
-        /* Tela de Autenticação */
-        #lock-screen { 
-            position: fixed; 
-            inset: 0; 
-            background: rgba(10, 12, 16, 0.95); 
-            display: flex; 
-            justify-content: center; 
-            align-items: center; 
-            z-index: 9999; 
-            backdrop-filter: blur(10px);
-        }
-        .lock-box { 
-            background: var(--bg-panel); 
-            padding: 40px; 
-            border-radius: 12px; 
-            text-align: center; 
-            border: 2px solid var(--cyan-glow); 
-            box-shadow: 0 0 25px rgba(0, 242, 254, 0.25);
-            width: 90%; 
-            max-width: 380px; 
-        }
-        .lock-box h2 {
-            font-size: 26px;
-            margin-bottom: 20px;
-            letter-spacing: 1px;
-            color: var(--cyan-glow);
-            text-shadow: 0 0 10px rgba(0, 242, 254, 0.3);
-        }
-
-        /* Inputs e Botões Globais */
-        input[type="text"], input[type="password"] { 
-            background: var(--bg-darkest); 
-            border: 1px solid var(--bg-card); 
-            color: var(--text-white); 
-            padding: 12px; 
-            border-radius: 6px; 
-            margin: 12px 0; 
-            width: 100%; 
-            transition: 0.3s;
-            outline: none;
-        }
-        input:focus {
-            border-color: var(--cyan-glow);
-            box-shadow: 0 0 10px rgba(0, 242, 254, 0.2);
-        }
-        .primary-btn { 
-            background: linear-gradient(135deg, var(--cyan-glow), var(--cyan-dark)); 
-            color: #0a0c10; 
-            border: none; 
-            padding: 12px; 
-            border-radius: 6px; 
-            cursor: pointer; 
-            font-weight: bold; 
-            width: 100%; 
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            transition: 0.2s;
-        }
-        .primary-btn:hover { 
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 242, 254, 0.4);
-        }
-
-        /* Menu Lateral Estilizado */
-        .sidebar { 
-            width: 260px; 
-            background-color: var(--bg-panel); 
-            display: flex; 
-            flex-direction: column; 
-            padding: 20px 15px; 
-            border-right: 1px solid rgba(255, 255, 255, 0.05); 
-        }
-        .brand { 
-            font-size: 22px; 
-            font-weight: 800; 
-            color: var(--cyan-glow); 
-            text-align: center; 
-            padding-bottom: 20px; 
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1); 
-            text-transform: uppercase; 
-            letter-spacing: 1.5px; 
-        }
-        .section-title { 
-            font-size: 11px; 
-            color: var(--text-muted); 
-            text-transform: uppercase; 
-            margin: 25px 0 10px; 
-            font-weight: 700; 
-            letter-spacing: 1px;
-        }
-        .nav-btn { 
-            background: none; 
-            border: none; 
-            color: var(--text-muted); 
-            text-align: left; 
-            padding: 12px 15px; 
-            border-radius: 8px; 
-            cursor: pointer; 
-            width: 100%; 
-            font-size: 14px; 
-            font-weight: 600;
-            display: flex; 
-            align-items: center; 
-            gap: 12px; 
-            transition: 0.2s;
-        }
-        .nav-btn:hover {
-            color: var(--text-white);
-            background: rgba(255, 255, 255, 0.03);
-        }
-        .nav-btn.active { 
-            background: rgba(0, 242, 254, 0.1); 
-            color: var(--cyan-glow); 
-            border-left: 4px solid var(--cyan-glow);
-            border-radius: 0 8px 8px 0;
-            padding-left: 11px;
-        }
-
-        /* Container Principal de Conteúdo */
-        .main-content { 
-            flex: 1; 
-            display: flex; 
-            flex-direction: column; 
-            background: var(--bg-darkest); 
-        }
-        .view-panel { 
-            flex: 1; 
-            display: none; 
-            padding: 30px; 
-            flex-direction: column; 
-            overflow-y: auto; 
-        }
-        .view-panel.active-panel { 
-            display: flex; 
-        }
-
-        /* Layout Especial da Aba de Comunicação */
-        .communication-layout {
-            display: flex;
-            flex-direction: column;
-            height: 100%;
-        }
-        .voice-bar { 
-            padding: 15px 25px; 
-            display: flex; 
-            gap: 15px; 
-            background: var(--bg-panel); 
-            border-radius: 10px;
-            margin-bottom: 20px;
-            align-items: center;
-            border: 1px solid rgba(255,255,255,0.03);
-        }
-        .voice-btn {
-            padding: 10px 20px;
-            border-radius: 6px;
-            font-weight: bold;
-            cursor: pointer;
-            border: none;
-            transition: 0.2s;
-        }
+        .voice-bar { padding: 15px 25px; display: flex; gap: 15px; background: var(--bg-panel); border-radius: 10px; margin-bottom: 20px; align-items: center; }
+        .voice-btn { padding: 10px 20px; border-radius: 6px; font-weight: bold; cursor: pointer; border: none; }
         .voice-btn.join { background: var(--cyan-glow); color: #000; }
         .voice-btn.leave { background: var(--red-alert); color: #fff; display: none; }
-        .voice-btn:hover { opacity: 0.9; transform: translateY(-1px); }
 
-        /* Área do Chat */
-        .chat-wrapper { 
-            flex: 1; 
-            display: flex; 
-            flex-direction: column; 
-            background: var(--bg-panel); 
-            border-radius: 12px;
-            border: 1px solid rgba(255,255,255,0.03);
-            overflow: hidden;
-        }
-        .chat-messages { 
-            flex: 1; 
-            overflow-y: auto; 
-            padding: 25px; 
-            display: flex; 
-            flex-direction: column; 
-            gap: 20px; 
-        }
-        .message-row { 
-            display: flex; 
-            gap: 15px; 
-            align-items: flex-start;
-        }
-        .user-avatar { 
-            width: 42px; 
-            height: 42px; 
-            background: linear-gradient(135deg, var(--cyan-glow), var(--cyan-dark)); 
-            border-radius: 8px; 
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            color: #0a0c10; 
-            font-weight: bold; 
-            font-size: 16px;
-        }
-        .message-body { display: flex; flex-direction: column; }
-        .message-author { font-weight: bold; color: var(--text-white); font-size: 14px; margin-bottom: 4px;}
-        .message-text { color: #b9bbbe; font-size: 14px; line-height: 1.5; }
+        .chat-wrapper { flex: 1; display: flex; flex-direction: column; background: var(--bg-panel); border-radius: 12px; overflow: hidden; border: 1px solid rgba(255,255,255,0.03); }
+        .chat-messages { flex: 1; overflow-y: auto; padding: 25px; display: flex; flex-direction: column; gap: 20px; }
+        .message-row { display: flex; gap: 15px; }
+        .user-avatar { width: 42px; height: 42px; background: linear-gradient(135deg, var(--cyan-glow), var(--cyan-dark)); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #0a0c10; font-weight: bold; }
+        .chat-input-bar { padding: 20px; background: rgba(0, 0, 0, 0.2); display: flex; gap: 10px; }
         
-        .chat-input-bar { 
-            padding: 20px; 
-            background: rgba(0, 0, 0, 0.2);
-            display: flex;
-            gap: 10px;
-        }
+        input { background: var(--bg-darkest); border: 1px solid var(--bg-card); color: var(--text-white); padding: 12px; border-radius: 6px; margin: 8px 0; width: 100%; text-align: center; }
         .chat-input-bar input { margin: 0; text-align: left; padding-left: 15px; flex: 1; }
-        .send-btn {
-            background: var(--bg-card);
-            border: 1px solid rgba(255,255,255,0.05);
-            color: var(--cyan-glow);
-            padding: 0 20px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: bold;
-            transition: 0.2s;
-        }
-        .send-btn:hover { background: var(--cyan-glow); color: #000; }
+        .send-btn { background: var(--bg-card); border: none; color: var(--cyan-glow); padding: 0 20px; border-radius: 6px; cursor: pointer; font-weight: bold; }
 
-        /* Estilo dos Módulos das outras abas (Jogo, Configurações) */
-        .panel-title { font-size: 24px; font-weight: 700; margin-bottom: 5px; }
-        .panel-subtitle { color: var(--text-muted); font-size: 14px; margin-bottom: 25px; }
-        
-        .dashboard-box { 
-            background: var(--bg-panel); 
-            padding: 30px; 
-            border-radius: 12px; 
-            width: 100%; 
-            max-width: 500px; 
-            border: 1px solid rgba(255,255,255,0.03);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-        }
+        .dashboard-box { background: var(--bg-panel); padding: 30px; border-radius: 12px; width: 100%; max-width: 500px; }
         .stats-container { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 20px 0; }
         .stat-item { background: var(--bg-card); padding: 15px; border-radius: 8px; text-align: center; border-bottom: 2px solid var(--cyan-glow); }
-        .stat-item span { font-size: 11px; color: var(--text-muted); text-transform: uppercase; font-weight: bold; }
-        .stat-item b { display: block; font-size: 20px; color: var(--text-white); margin-top: 5px; }
+        .log { background: var(--bg-darkest); padding: 15px; height: 120px; overflow-y: auto; text-align: left; font-size: 13px; margin: 15px 0; border-radius: 6px; color: #2ecc71; font-family: monospace; }
         
-        .console-log { 
-            background: var(--bg-darkest); 
-            padding: 15px; 
-            height: 120px; 
-            overflow-y: auto; 
-            text-align: left; 
-            font-size: 13px; 
-            margin: 15px 0; 
-            border-radius: 6px; 
-            color: #2ecc71; 
-            font-family: monospace;
-            border: 1px solid rgba(255,255,255,0.05);
-        }
+        .ranking-grid { width: 100%; background: var(--bg-panel); border-radius: 10px; overflow: hidden; }
+        .ranking-row { display: grid; grid-template-columns: 80px 1fr 100px 100px; padding: 15px 20px; border-bottom: 1px solid rgba(255,255,255,0.02); }
+        .ranking-header { background: rgba(0, 242, 254, 0.05); color: var(--cyan-glow); font-weight: bold; }
+        .primary-btn { background: linear-gradient(135deg, var(--cyan-glow), var(--cyan-dark)); color: #0a0c10; border: none; padding: 12px; border-radius: 6px; cursor: pointer; font-weight: bold; width: 100%; text-transform: uppercase; }
+    </style>
+</head>
+<body>
 
-        .ranking-grid {
-            width: 100%;
-            background: var(--bg-panel);
-            border-radius: 10px;
-            overflow: hidden;
-            border: 1px solid rgba(255,255,255,0.03);
-        }
-        .ranking-row {
-            display: grid;
-            grid-template-columns: 80px 1fr 100px 100px;
-            padding: 15px 20px;
-            border-bottom: 1px solid rgba(255,255,255,0.02);
-        }
-        .ranking-header {
-            background: rgba(0, 242, 254, 0.05);
-            font-weight: bold;
-            color: var(--cyan-glow);
-        }
+    <div id="lock-screen">
+        <div class="lock-box">
+            <h2 style="color: var(--cyan-glow); margin-bottom: 20px;">LINERCALL'S</h2>
+            <input type="password" id="pass-input" placeholder="SENHA DO SERVIDOR">
+            <button class="primary-btn" onclick="processAuth()">Acessar Plataforma</button>
+        </div>
+    </div>
 
-/* Configurações */
-.config-group { margin-bottom: 20px; text-align: left; }
-.config-group label { display: block; font-size: 13px; color: var(--text-muted); font-weight: 600; margin-bottom: 6px; }
+    <audio id="bg-music" loop src="https://soundhelix.com"></audio>
 
+    <div class="sidebar">
+        <div class="brand">LinerCall's</div>
+        <div class="section-title">Navegação</div>
+        <button class="nav-btn active" id="tab-chat-btn" onclick="changeView('chat')">💬 Falar com Amizades</button>
+        <button class="nav-btn" id="tab-jogar-btn" onclick="changeView('jogar')">🎮 Jogar Mini História</button>
+        <button class="nav-btn" id="tab-ranking-btn" onclick="changeView('ranking')">🏆 Ranking do Jogo</button>
+        <button class="nav-btn" id="tab-config-btn" onclick="changeView('config')">⚙️ Configurações</button>
+        <div style="margin-top:auto; font-size:12px; background:var(--bg-card); padding:12px; border-radius:8px; display:flex; justify-content:space-between; align-items:center;">
+            <span>🎵 Trilha:</span>
+            <button onclick="handleMusicToggle()" id="music-trigger" style="background:#248046; border:none; color:white; padding:4px 10px; border-radius:4px; cursor:pointer; font-weight:bold;">LIGAR</button>
+        </div>
+    </div>
 
+    <div class="main-content">
+        <div id="panel-chat" class="view-panel active-panel" style="padding:20px; height:100%;">
+            <div class="voice-bar">
+                <span style="font-weight:600; font-size:15px; flex:1;">🎙️ Voz em Tempo Real:</span>
+                <button class="voice-btn join" id="call-join-trigger" onclick="connectVoiceCall()">Entrar na Call</button>
+                <button class="voice-btn leave" id="call-leave-trigger" onclick="disconnectVoiceCall()">Sair da Call</button>
+            </div>
+            <div id="voice-box" style="height:180px; display:none; background:#111214; margin-bottom: 20px;"></div>
+            <div class="chat-wrapper">
+                <div class="chat-messages" id="chat-flow">
+                    <div class="message-row">
+                        <div class="user-avatar">SYS</div>
+                        <div>
+                            <strong style="color:var(--cyan-glow);">Servidor Central</strong>
+                            <div class="message-text">Plataforma carregada. Digite abaixo ou conecte-se na call de voz.</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="chat-input-bar">
+                    <input type="text" id="chat-input" placeholder="Digite sua mensagem...">
+                    <button class="send-btn" onclick="sendTextMessage()">Enviar</button>
+                </div>
+            </div>
+        </div>
 
-LINERCALL'S
+        <div id="panel-jogar" class="view-panel">
+            <h2>Masmorra do Destino</h2>
+            <div class="dashboard-box" style="margin-top:20px;">
+                <h3 id="game-char-name">Carregando...</h3>
+                <div class="stats-container">
+                    <div class="stat-item"><span>Vitórias</span><b id="p-wins">0</b></div>
+                    <div class="stat-item"><span>Derrotas</span><b id="p-losses">0</b></div>
+                </div>
+                <div class="log" id="game-log">>> Aguardando comando...</div>
+                <button class="primary-btn" onclick="playBattleTurn()">Iniciar Confronto</button>
+            </div>
+        </div>
 
-Acessar Plataforma
+        <div id="panel-ranking" class="view-panel">
+            <h2>🏆 Placar Geral</h2>
+            <div class="ranking-grid" style="margin-top:20px;">
+                <div class="ranking-row ranking-header"><div>Posição</div><div>Nome no Jogo</div><div>Vitórias</div><div>Derrotas</div></div>
+                <div id="ranking-rows-container"></div>
+            </div>
+        </div>
 
-LinerCall's
-Navegação
-💬 Falar com Amizades
-... Jogar Mini História
-🏆 Ranking do Jogo
-⚙️ Configurações
-🎵 Trilha Sonora:
-LIGAR
-
-🎙️ Sistema de Voz em Tempo Real:
-Entrar na Call
-Sair da Call
-SYS
-
-Servidor Central
-Plataforma carregada com sucesso. Envie mensagens ou conecte-se à call de voz corporativa acima.
-
-
-
-
-
-Enviar
-
-
-
-Masmorra do Destino
-Avance capítulos enfrentando oponentes do servidor.
-
-Carregando dados...
-
-Vitórias0
-Derrotas0
-
->> Aguardando comando de combate...
-Iniciar Próximo Confronto
-
-Placar Geral
-Ranking global baseado no rendimento das campanhas do jogo.
-
-
-PosiçãoNome no JogoVitóriasDerrotas
-
-
-
-Central de Controle
-Gerencie suas credenciais locais e customizações de interface.
-
-Identificação de Perfil (Chat/Calls):
-Designação de Personagem (Campanha do Jogo):
-Atualizar Informações
-Customização de Estilo:
+        <div id="panel-config" class="view-panel">
+            <h2>⚙️ Central de Controle</h2>
+            <div class="dashboard-box" style="margin-top:20px; text-align:left;">
+                <label>Nome no CHAT:</label><input type="text" id="config-profile-name" style="text-align:left;">
+                <label>Nome no JOGO:</label><input type="text" id="config-game-name" style="text-align:left;">
+                <button class="primary-btn" onclick="persistProfileData()" style="background:#248046; color:#fff; margin-bottom:20px;">Atualizar Informações</button>
 Alternar Modo Claro / Escuro
+Logout do E-mail
 
-Efetuar Logout do E-mail
 
-
-let currentEmail = "";
-let jitsiAPI = null;
-// Gerenciamento de Cliques e Eventos Principais
-document.getElementById('login-trigger').addEventListener('click', processAuth);
-document.getElementById('tab-chat-btn').addEventListener('click', () => changeView('chat'));
-document.getElementById('tab-jogar-btn').addEventListener('click', () => changeView('jogar'));
-document.getElementById('tab-ranking-btn').addEventListener('click', () => changeView('ranking'));
-document.getElementById('tab-config-btn').addEventListener('click', () => changeView('config'));
-document.getElementById('music-trigger').addEventListener('click', handleMusicToggle);
-document.getElementById('call-join-trigger').addEventListener('click', connectVoiceCall);
-document.getElementById('call-leave-trigger').addEventListener('click', disconnectVoiceCall);
-document.getElementById('chat-send-trigger').addEventListener('click', sendTextMessage);
-document.getElementById('battle-trigger').addEventListener('click', playBattleTurn);
-document.getElementById('save-settings-trigger').addEventListener('click', persistProfileData);
-document.getElementById('theme-trigger').addEventListener('click', toggleInterfaceTheme);
-document.getElementById('logout-trigger').addEventListener('click', clearUserSession);
+let currentEmail = "", jitsiAPI = null;
+// Injeta a API de forma assíncrona para evitar quebras locais
+(function() {
+const script = document.createElement('script');
+script.src = "jit.si";
+script.async = true;
+document.head.appendChild(script);
+})();
+window.onload = function() {
 document.getElementById('chat-input').addEventListener('keypress', function(e) {
 if (e.key === 'Enter') sendTextMessage();
 });
+};
 function processAuth() {
 if(document.getElementById('pass-input').value === "2020") {
 document.getElementById('lock-screen').style.display = 'none';
 initializeSession();
-} else {
-alert("Senha do servidor incorreta.");
-}
+} else { alert("Senha incorreta."); }
 }
 function initializeSession() {
 if (!currentEmail) {
-let email = prompt("Informe seu e-mail de acesso para carregar os registros locais:");
+let email = prompt("Informe seu e-mail:");
 currentEmail = email ? email.trim() : "visitante@linercalls.com";
 let localDataset = localStorage.getItem(currentEmail);
 if (!localDataset) {
-let nickChat = prompt("Escolha o seu apelido de exibição no Chat:");
-let nickJogo = prompt("Defina o nome do seu personagem no minijogo:");
+let nickChat = prompt("Seu apelido no Chat:");
+let nickJogo = prompt("Nome do seu personagem no jogo:");
 localStorage.setItem(currentEmail, JSON.stringify({
-profileName: nickChat || "Usuário",
-gameName: nickJogo || "Guerreiro",
-wins: 0,
-losses: 0
+profileName: nickChat || "Usuário", gameName: nickJogo || "Guerreiro", wins: 0, losses: 0
 }));
 let directory = JSON.parse(localStorage.getItem('liner_idx')) || [];
-if(!directory.includes(currentEmail)) {
-directory.push(currentEmail);
-localStorage.setItem('liner_idx', JSON.stringify(directory));
-}
+if(!directory.includes(currentEmail)) { directory.push(currentEmail); localStorage.setItem('liner_idx', JSON.stringify(directory)); }
 }
 }
 refreshInterfaceData();
@@ -436,16 +190,11 @@ document.getElementById('p-losses').innerText = record.losses || 0;
 document.getElementById('config-profile-name').value = record.profileName || "";
 document.getElementById('config-game-name').value = record.gameName || "";
 const directory = JSON.parse(localStorage.getItem('liner_idx')) || [];
-let leaderboard = [];
-directory.forEach(email => {
-const data = JSON.parse(localStorage.getItem(email));
-if(data) leaderboard.push(data);
-});
-leaderboard.sort((alpha, beta) => (beta.wins || 0) - (alpha.wins || 0));
-const container = document.getElementById('ranking-rows-container');
-container.innerHTML = "";
+let leaderboard = []; directory.forEach(email => { const data = JSON.parse(localStorage.getItem(email)); if(data) leaderboard.push(data); });
+leaderboard.sort((a, b) => b.wins - a.wins);
+const container = document.getElementById('ranking-rows-container'); container.innerHTML = "";
 leaderboard.forEach((player, index) => {
-container.innerHTML +=  <div class="ranking-row"> <div>${index + 1}º</div> <div><b>${player.gameName || 'Desconhecido'}</b></div> <div style="color:#2ecc71;">🟩 ${player.wins || 0}</div> <div style="color:#e74c3c;">🟥 ${player.losses || 0}</div> </div>;
+container.innerHTML += <div class="ranking-row"><div>${index + 1}º</div><div><b>${player.gameName || 'Viajante'}</b></div><div style="color:#2ecc71;">🟩 ${player.wins || 0}</div><div style="color:#e74c3c;">🟥 ${player.losses || 0}</div></div>;
 });
 }
 function sendTextMessage() {
@@ -454,23 +203,18 @@ const messageText = inputField.value.trim();
 if(!messageText) return;
 const record = JSON.parse(localStorage.getItem(currentEmail)) || { profileName: "Membro" };
 const timeline = document.getElementById('chat-flow');
-timeline.innerHTML +=  <div class="message-row"> <div class="user-avatar">${record.profileName.substring(0,2).toUpperCase()}</div> <div class="message-body"> <span class="message-author">${record.profileName}</span> <div class="message-text">${messageText}</div> </div> </div>;
-inputField.value = "";
-timeline.scrollTop = timeline.scrollHeight;
+timeline.innerHTML += <div class="message-row"><div class="user-avatar">${record.profileName.substring(0,2).toUpperCase()}</div><div><strong>${record.profileName}</strong><div class="message-text">${messageText}</div></div></div>;
+inputField.value = ""; timeline.scrollTop = timeline.scrollHeight;
 }
 function connectVoiceCall() {
-const containerBox = document.getElementById('voice-box');
-containerBox.style.display = 'block';
-containerBox.innerHTML = "";
+if (typeof JitsiMeetExternalAPI === 'undefined') {
+alert("O sistema de voz ainda está inicializando na rede. Aguarde 3 segundos e tente novamente.");
+return;
+}
+const containerBox = document.getElementById('voice-box'); containerBox.style.display = 'block'; containerBox.innerHTML = "";
 document.getElementById('call-join-trigger').style.display = 'none';
 document.getElementById('call-leave-trigger').style.display = 'block';
-jitsiAPI = new JitsiMeetExternalAPI("meet.jit.si", {
-roomName: "Liner_Geral_Call_Room_Secure",
-width: "100%",
-height: "100%",
-parentNode: containerBox,
-configOverwrite: { startWithAudioMuted: false, prejoinPageEnabled: false }
-});
+jitsiAPI = new JitsiMeetExternalAPI("meet.jit.si", { roomName: "Liner_Geral_Secure_Room_Unique", width: "100%", height: "100%", parentNode: containerBox });
 }
 function disconnectVoiceCall() {
 document.getElementById('voice-box').style.display = 'none';
@@ -481,45 +225,22 @@ if(jitsiAPI) jitsiAPI.dispose();
 function playBattleTurn() {
 const record = JSON.parse(localStorage.getItem(currentEmail));
 const logConsole = document.getElementById('game-log');
-if(Math.random() > 0.4) {
-record.wins += 1;
-logConsole.innerHTML += "
-[VITÓRIA] Turno bem-sucedido. Oponente derrotado!";
-} else {
-record.losses += 1;
-logConsole.innerHTML += "
-[DERROTA] Falha tática crítica detectada.";
-}
-localStorage.setItem(currentEmail, JSON.stringify(record));
-refreshInterfaceData();
-logConsole.scrollTop = logConsole.scrollHeight;
+if(Math.random() > 0.4) { record.wins += 1; logConsole.innerHTML += "
+[VITÓRIA] Avançou!"; }
+else { record.losses += 1; logConsole.innerHTML += "
+[DERROTA] Recuou."; }
+localStorage.setItem(currentEmail, JSON.stringify(record)); refreshInterfaceData(); logConsole.scrollTop = logConsole.scrollHeight;
 }
 function handleMusicToggle() {
-const track = document.getElementById('bg-music');
-const triggerBtn = document.getElementById('music-trigger');
-if(track.paused) {
-track.play();
-triggerBtn.innerText = "DESLIGAR";
-triggerBtn.style.background = "#ff4d4d";
-} else {
-track.pause();
-triggerBtn.innerText = "LIGAR";
-triggerBtn.style.background = "#248046";
+const track = document.getElementById('bg-music'); const triggerBtn = document.getElementById('music-trigger');
+if(track.paused) { track.play().catch(()=>{}); triggerBtn.innerText = "DESLIGAR"; triggerBtn.style.background = "#ff4d4d"; }
+else { track.pause(); triggerBtn.innerText = "LIGAR"; triggerBtn.style.background = "#248046"; }
 }
-}
-function toggleInterfaceTheme() {
-document.body.classList.toggle('light-mode');
-}
+function toggleInterfaceTheme() { document.body.classList.toggle('light-mode'); }
 function persistProfileData() {
 const record = JSON.parse(localStorage.getItem(currentEmail));
 record.profileName = document.getElementById('config-profile-name').value;
 record.gameName = document.getElementById('config-game-name').value;
-localStorage.setItem(currentEmail, JSON.stringify(record));
-alert("Registros internos atualizados com sucesso.");
-refreshInterfaceData();
+localStorage.setItem(currentEmail, JSON.stringify(record)); alert("Configurações atualizadas!"); refreshInterfaceData();
 }
-function clearUserSession() {
-currentEmail = "";
-document.getElementById('lock-screen').style.display = 'flex';
-document.getElementById('pass-input').value = "";
-}
+function clearUserSession() { currentEmail = ""; document.getElementById('lock-screen').style.display = 'flex'; }
