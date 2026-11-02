@@ -323,3 +323,95 @@
             document.getElementById('tab-' + panelName + '-btn').classList.add('active');
             refreshInterfaceData();
         }
+        function startLiveSyncing() {
+            refreshInterfaceData();
+            setInterval(refreshInterfaceData, 3000);
+        }
+
+        function refreshInterfaceData() {
+            let d = JSON.parse(localStorage.getItem(currentEmail));
+            if(!d) return;
+            document.getElementById('game-char-name').innerText = "⚔️ " + d.gameName;
+            document.getElementById('p-wins').innerText = d.wins;
+            document.getElementById('p-losses').innerText = d.losses;
+            document.getElementById('config-profile-name').value = d.profileName;
+            document.getElementById('config-game-name').value = d.gameName;
+
+            let idx = JSON.parse(localStorage.getItem('liner_idx')) || [];
+            let rBox = document.getElementById('ranking-rows-container'); rBox.innerHTML = "";
+            let aBox = document.getElementById('arena-online-list'); aBox.innerHTML = "";
+
+            idx.forEach((em, i) => {
+                let p = JSON.parse(localStorage.getItem(em));
+                if(p) {
+                    rBox.innerHTML += `<div class="ranking-row"><div>${i+1}º</div><div><b>${p.gameName}</b></div><div style="color:#2ecc71;">🟩 ${p.wins}</div><div style="color:#e74c3c;">🟥 ${p.losses}</div></div>`;
+                    if(em !== currentEmail) {
+                        aBox.innerHTML += `<div class="pvp-user-card"><span>⚔️ <b>${p.gameName}</b></span><button class="duel-btn" onclick="triggerDuel('${em}')">Desafiar</button></div>`;
+                    }
+                }
+            });
+            if(!aBox.innerHTML) aBox.innerHTML = "<div style='color:var(--text-muted); font-size:13px;'>Nenhum oponente ativo no navegador...</div>";
+        }
+
+        function triggerDuel(oppId) {
+            let me = JSON.parse(localStorage.getItem(currentEmail));
+            let opp = JSON.parse(localStorage.getItem(oppId));
+            let log = document.getElementById('arena-battle-log');
+            let myRoll = Math.floor(Math.random() * 20) + 1;
+            let oppRoll = Math.floor(Math.random() * 20) + 1;
+
+            log.innerHTML += `<br>⚔️ <b>Duelo:</b> Você vs ${opp.gameName}<br>🎲 Seu d20: ${myRoll} | Inimigo: ${oppRoll}`;
+            if(myRoll >= oppRoll) { me.wins++; log.innerHTML += "<br><span style='color:#2ecc71;'>[VITÓRIA]</span> Ganhou!"; }
+            else { me.losses++; log.innerHTML += "<br><span style='color:#ff4d4d;'>[DERROTA]</span> Perdeu!"; }
+            
+            localStorage.setItem(currentEmail, JSON.stringify(me));
+            localStorage.setItem(oppId, JSON.stringify(opp));
+            refreshInterfaceData();
+            log.scrollTop = log.scrollHeight;
+        }
+
+        function loadStoryNode(id) {
+            let n = storyCampaign[id]; if(!n) return;
+            document.getElementById('story-chapter-title').innerText = n.title;
+            document.getElementById('story-display-text').innerText = n.text;
+            let box = document.getElementById('story-choices-box'); box.innerHTML = "";
+            n.choices.forEach(c => {
+                let b = document.createElement('button'); b.className = 'choice-btn'; b.innerText = c.text;
+                b.onclick = () => loadStoryNode(c.next); box.appendChild(b);
+            });
+        }
+
+        function pushOnlineMessage() {
+            let inp = document.getElementById('chat-input'); let txt = inp.value.trim(); if(!txt) return;
+            let d = JSON.parse(localStorage.getItem(currentEmail));
+            let flow = document.getElementById('chat-flow');
+            flow.innerHTML += `<div class="message-row"><div class="user-avatar">${d.profileName.substring(0,2)}</div><div><strong>${d.profileName}</strong><div class="message-text">${txt}</div></div></div>`;
+            inp.value = ""; flow.scrollTop = flow.scrollHeight;
+        }
+
+        function connectJitsiVoice() {
+            let b = document.getElementById('voice-box'); b.style.display = 'block'; b.innerHTML = "";
+            document.getElementById('call-join-trigger').style.display = 'none';
+            document.getElementById('call-leave-trigger').style.display = 'block';
+            jitsiAPI = new JitsiMeetExternalAPI("meet.jit.si", { roomName: "LinerCall_Voice_2026", width: "100%", height: "100%", parentNode: b });
+        }
+
+        function disconnectJitsiVoice() {
+            document.getElementById('voice-box').style.display = 'none';
+            document.getElementById('call-join-trigger').style.display = 'block';
+            document.getElementById('call-leave-trigger').style.display = 'none';
+            if(jitsiAPI) jitsiAPI.dispose();
+        }
+
+        function toggleBackgroundTrack() { let t = document.getElementById('bg-music'); t.paused ? t.play().catch(()=>{}) : t.pause(); }
+        function switchInterfaceColors() { document.body.classList.toggle('light-mode'); }
+        function saveCloudSettings() {
+            let d = JSON.parse(localStorage.getItem(currentEmail));
+            d.profileName = document.getElementById('config-profile-name').value;
+            d.gameName = document.getElementById('config-game-name').value;
+            localStorage.setItem(currentEmail, JSON.stringify(d)); alert("Perfil Atualizado!");
+        }
+        function disconnectUserSession() { currentEmail = ""; document.getElementById('lock-screen').style.display = 'flex'; }
+    </script>
+</body>
+</html>
