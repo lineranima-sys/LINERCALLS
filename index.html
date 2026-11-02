@@ -4,6 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LinerCall's - Plataforma Online & RPG</title>
+</head>
+<body>
+
+    <!-- 🔐 TELA DE AUTENTICAÇÃO DUPLA (SENHA + GMAIL) -->
+    <div id="lock-screen">
+        <div class="lock-box" id="step-1-box">
+            <h2>LINERCALL'S 🔐</h2>
+            <p class="box-desc">Código de Acesso do Servidor</p>
+            <input type="password" id="server-pass-input" placeholder="DIGITE A SENHA ULTRA SECRETA">
+            <button class="primary-btn" id="btn-validar-servidor">Verificar Credencial</button>
+        </div>
+
         <div class="lock-box" id="step-2-box" style="display: none; border-color: #ea4335;">
             <h2 style="color: #ea4335;">LOGIN GMAIL 📧</h2>
             <p class="box-desc">Conecte sua conta para sincronizar o chat e seus personagens</p>
@@ -12,7 +24,7 @@
             <button class="primary-btn" id="btn-entrar-plataforma" style="background: linear-gradient(135deg, #ea4335, #c5221f); color: white;">Entrar no Servidor</button>
         </div>
     </div>
-    
+
     <!-- TRILHA EM LOOP -->
     <audio id="bg-music" loop src="https://soundhelix.com"></audio>
 
@@ -65,9 +77,7 @@
                 <div class="story-text-container" id="story-display-text">
                     Você acorda em uma taverna escura e fria. O estalajadeiro olha para você de forma suspeita enquanto limpa um copo. Um mapa antigo está estendido na mesa ao lado. O que você deseja fazer?
                 </div>
-                <div class="story-choices-wrapper" id="story-choices-box" style="margin-top:20px; display:flex; flex-direction:column; gap:10px;">
-                    <!-- Botões de escolhas dinâmicas entrarão aqui -->
-                </div>
+                <div class="story-choices-wrapper" id="story-choices-box" style="margin-top:20px; display:flex; flex-direction:column; gap:10px;"></div>
             </div>
         </div>
 
@@ -78,9 +88,7 @@
             <div style="display: flex; gap: 20px; flex-wrap: wrap;">
                 <div class="dashboard-box" style="flex: 1; min-width: 300px;">
                     <h3 style="font-size: 16px; margin-bottom: 15px; color: var(--cyan-glow);">Jogadores Online na Arena</h3>
-                    <div id="arena-online-list" style="display:flex; flex-direction:column; gap:10px;">
-                        <!-- Lista dinâmica de players ativos -->
-                    </div>
+                    <div id="arena-online-list" style="display:flex; flex-direction:column; gap:10px;"></div>
                 </div>
                 <div class="dashboard-box" style="flex: 1; min-width: 300px;">
                     <h3 style="font-size: 16px; margin-bottom: 15px; color: var(--cyan-glow);">Histórico de Combates da Arena</h3>
@@ -130,12 +138,10 @@
     * { margin: 0; padding: 0; box-sizing: border-box; font-family: sans-serif; }
     body { background-color: var(--bg-darkest); color: var(--text-white); display: flex; height: 100vh; overflow: hidden; }
     
-    /* Telas de Bloqueio */
     #lock-screen { position: fixed; inset: 0; background: #06080c; display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 9999; }
     .lock-box { background: var(--bg-panel); padding: 40px; border-radius: 12px; text-align: center; border: 2px solid var(--cyan-glow); width: 90%; max-width: 380px; box-shadow: 0 0 25px rgba(0, 242, 254, 0.2); }
     .box-desc { font-size: 12px; color: var(--text-muted); margin: -10px 0 15px; }
 
-    /* Menu Lateral */
     .sidebar { width: 260px; background-color: var(--bg-panel); display: flex; flex-direction: column; padding: 20px 15px; border-right: 1px solid rgba(255, 255, 255, 0.05); }
     .brand { font-size: 24px; font-weight: bold; color: var(--cyan-glow); text-align: center; padding-bottom: 20px; border-bottom: 1px solid rgba(255, 255, 255, 0.1); text-transform: uppercase; letter-spacing: 1.5px; text-shadow: 0 0 10px rgba(0, 242, 254, 0.3); }
     .section-title { font-size: 11px; color: var(--text-muted); text-transform: uppercase; margin: 20px 0 8px; font-weight: bold; letter-spacing: 0.5px; }
@@ -145,19 +151,18 @@
     .audio-widget { margin-top: auto; font-size: 12px; background: var(--bg-card); padding: 12px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; }
     .audio-widget button { background: #248046; border: none; color: white; padding: 4px 10px; border-radius: 4px; cursor: pointer; font-weight: bold; }
 
-    /* Área Principal */
     .main-content { flex: 1; display: flex; flex-direction: column; background: var(--bg-darkest); }
     .view-panel { flex: 1; display: none; padding: 30px; flex-direction: column; overflow-y: auto; }
     .view-panel.active-panel { display: flex; }
     .panel-title { font-size: 24px; font-weight: bold; margin-bottom: 4px; }
     .panel-subtitle { font-size: 13px; color: var(--text-muted); margin-bottom: 25px; }
 
-    /* Voz e Chat */
     .voice-header { padding: 15px 25px; display: flex; gap: 15px; background: var(--bg-panel); border-radius: 10px; margin-bottom: 20px; align-items: center; border: 1px solid rgba(255,255,255,0.02); }
     .voice-status-text { font-weight: 600; font-size: 14px; flex: 1; }
     .voice-btn { padding: 10px 20px; border-radius: 6px; font-weight: bold; cursor: pointer; border: none; transition: 0.2s; }
     .voice-btn.join { background: var(--cyan-glow); color: #000; }
     .voice-btn.leave { background: var(--red-alert); color: #fff; display: none; }
+    
     .chat-wrapper { flex: 1; display: flex; flex-direction: column; background: var(--bg-panel); border-radius: 12px; overflow: hidden; border: 1px solid rgba(255,255,255,0.02); }
     .chat-messages { flex: 1; overflow-y: auto; padding: 25px; display: flex; flex-direction: column; gap: 20px; }
     .message-row { display: flex; gap: 15px; }
@@ -167,21 +172,17 @@
     .chat-input-bar input { margin: 0; text-align: left; padding-left: 15px; flex: 1; }
     .send-btn { background: var(--bg-card); border: none; color: var(--cyan-glow); padding: 0 20px; border-radius: 6px; cursor: pointer; font-weight: bold; border: 1px solid rgba(255,255,255,0.05); }
 
-    /* Módulos de Informações e Caixas */
     input { background: var(--bg-darkest); border: 1px solid var(--bg-card); color: var(--text-white); padding: 12px; border-radius: 6px; margin: 8px 0; width: 100%; text-align: center; outline: none; font-size: 14px; }
     input:focus { border-color: var(--cyan-glow); }
     .dashboard-box { background: var(--bg-panel); padding: 30px; border-radius: 12px; width: 100%; border: 1px solid rgba(255,255,255,0.02); box-shadow: 0 10px 30px rgba(0,0,0,0.4); }
     .text-left { text-align: left; }
     .story-text-container { background: var(--bg-darkest); padding: 20px; border-radius: 8px; line-height: 1.6; border-left: 4px solid var(--cyan-glow); color: #cbd5e1; font-size: 15px; }
     
-    /* Botões da História e Duelo */
     .choice-btn { background: var(--bg-card); border: 1px solid rgba(255,255,255,0.05); color: var(--cyan-glow); padding: 12px 20px; border-radius: 6px; text-align: left; cursor: pointer; font-weight: 600; width: 100%; transition: 0.2s; }
     .choice-btn:hover { background: var(--cyan-glow); color: #000; box-shadow: 0 0 15px rgba(0, 242, 254, 0.2); transform: translateX(5px); }
     .pvp-user-card { background: var(--bg-card); padding: 15px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; border: 1px solid rgba(255,255,255,0.03); }
     .duel-btn { background: var(--cyan-glow); color: #000; border: none; padding: 6px 14px; border-radius: 4px; font-weight: bold; cursor: pointer; font-size: 12px; text-transform: uppercase; }
-    .duel-btn:hover { opacity: 0.9; }
 
-    /* Tabelas e Logs */
     .stats-container { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 20px 0; }
     .stat-item { background: var(--bg-card); padding: 15px; border-radius: 8px; text-align: center; border-bottom: 2px solid var(--cyan-glow); }
     .stat-item span { font-size: 11px; color: var(--text-muted); text-transform: uppercase; font-weight: bold; }
@@ -192,29 +193,19 @@
     .ranking-row { display: grid; grid-template-columns: 80px 1fr 100px 100px; padding: 15px 20px; border-bottom: 1px solid rgba(255,255,255,0.01); }
     .ranking-header { background: rgba(0, 242, 254, 0.04); color: var(--cyan-glow); font-weight: bold; }
     .primary-btn { background: linear-gradient(135deg, var(--cyan-glow), var(--cyan-dark)); color: #06080c; border: none; padding: 12px; border-radius: 6px; cursor: pointer; font-weight: bold; width: 100%; text-transform: uppercase; letter-spacing: 0.5px; transition: 0.2s; }
-    .primary-btn:hover { transform: translateY(-1px); box-shadow: 0 4px 15px rgba(0, 242, 254, 0.3); }
     label { font-size: 13px; color: var(--text-muted); font-weight: bold; display: block; margin-bottom: 6px; }
 </style>
-    <!-- Script do Sistema de Chamadas de Voz -->
+    <!-- Script do Jitsi Meet para Chamadas de Voz Corporativas -->
     <script src="https://jit.si"></script>
-    
-    <!-- Script do Banco de Dados em Nuvem e Tempo Real Descentralizado (GunDB) -->
-    <script src="https://jsdelivr.net"></script>
 
     <script>
         let currentEmail = "", jitsiAPI = null;
-        
-        // Conexão estável com servidores públicos do banco de dados na nuvem
-        const gun = Gun(['https://herokuapp.com', 'https://peer.ooo']);
-        const dbChat = gun.get('linercalls_v3_chat');
-        const dbPlayers = gun.get('linercalls_v3_players');
-        const dbDuels = gun.get('linercalls_v3_duels');
 
-        // Árvore estruturada de dados da campanha do Modo História (RP)
+        // Estrutura complexa do Roleplay (Modo História)
         const storyCampaign = {
             start: {
                 title: "Capítulo 1: O Despertar na Taverna",
-                text: "Você acorda em uma taverna escura. O estalajadeiro limpa um copo e te encara. Um mapa antigo está estendido na mesa de carvalho ao lado. O que deseja fazer?",
+                text: "Você acorda em uma taverna escura. O estalajadeiro limpa um copo e te encara de canto de olho. Um mapa antigo está estendido na mesa ao lado. O que deseja fazer?",
                 choices: [
                     { text: "🗺️ Examinar o mapa antigo na mesa", next: "map" },
                     { text: "🍺 Conversar com o estalajadeiro suspeito", next: "innkeeper" }
@@ -222,38 +213,38 @@
             },
             map: {
                 title: "Capítulo 1: O Mapa Perdido",
-                text: "O mapa mostra uma rota vermelha em direção às Ruínas Cianas Esquecidas. Enquanto você olha, um mercenário na mesa de trás saca uma adaga! Como reagir?",
+                text: "O mapa mostra uma rota em direção às Ruínas Cianas Esquecidas. Enquanto você analisa os detalhes, um mercenário na mesa de trás saca uma adaga! Como reagir?",
                 choices: [
-                    { text: "⚔️ Sacar sua espada e contra-atacar", next: "fight_win" },
-                    { text: "🏃 Fugir da taverna pela janela de trás", next: "escape" }
+                    { text: "⚔️ Sacar sua lâmina e contra-atacar", next: "fight_win" },
+                    { text: "🏃 Fugir da taverna correndo pela porta de trás", next: "escape" }
                 ]
             },
             innkeeper: {
                 title: "Capítulo 1: Informações Perigosas",
-                text: "O estalajadeiro cospe no chão e sussurra: 'Se procura aventuras, o bando de criminosos na floresta capturou uma carga preciosa esta noite. Siga por sua conta e risco.'",
+                text: "O estalajadeiro sussurra: 'Se procura glória, o bando de saqueadores na floresta capturou uma carga mística esta noite. Vá por sua conta e risco.'",
                 choices: [
-                    { text: "🌲 Investigar a floresta sob as sombras", next: "forest" },
-                    { text: "🗺️ Ignorar o velho e ir olhar o mapa na mesa", next: "map" }
+                    { text: "🌲 Investigar a floresta sob as sombras da noite", next: "forest" },
+                    { text: "🗺️ Ignorar o velho e olhar o mapa na mesa", next: "map" }
                 ]
             },
             fight_win: {
                 title: "Capítulo 2: Sangue e Glória",
-                text: "Com um reflexo impecável, você desarma o mercenário. Impressionada, a clientela da taverna começa a aplaudir. Você agora é respeitado e ganhou o mapa das Ruínas!",
-                choices: [{ text: "🔄 Recomeçar a história do início", next: "start" }]
+                text: "Com um reflexo impecável, você desarma o mercenário. Impressionada com sua técnica, a clientela começa a aplaudir. Você ganhou o respeito de todos e o mapa!",
+                choices: [{ text: "🔄 Recomeçar a jornada do início", next: "start" }]
             },
             escape: {
                 title: "Capítulo 2: Perseguido na Noite",
-                text: "Você pula a janela e cai na lama do beco. O mercenário grita atrás de você. Você escapou da morte, mas perdeu a chance de pegar o mapa antigo.",
-                choices: [{ text: "🔄 Recomeçar a história do início", next: "start" }]
+                text: "Você pula a janela e cai na lama do beco. O mercenário grita furioso atrás de você. Você escapou da morte, mas perdeu a chance de coletar pistas.",
+                choices: [{ text: "🔄 Recomeçar a jornada do início", next: "start" }]
             },
             forest: {
                 title: "Capítulo 2: Emboscada das Sombras",
-                text: "Ao entrar na floresta, flechas passam raspando pela sua cabeça. Os criminosos cercaram você! Sua jornada terminou de forma trágica.",
-                choices: [{ text: "🔄 Recomeçar a história do início", next: "start" }]
+                text: "Ao entrar na densa floresta, flechas passam raspando pela sua cabeça. Os criminosos cercaram você em desvantagem! Sua jornada terminou aqui.",
+                choices: [{ text: "🔄 Recomeçar a jornada do início", next: "start" }]
             }
         };
 
-        // Escutadores internos de segurança (Livre de falhas inline e travas locais)
+        // Escutadores nativos blindados (Rodam direto na inicialização da página)
         window.addEventListener('DOMContentLoaded', () => {
             document.getElementById('btn-validar-servidor').addEventListener('click', verifyServerKey);
             document.getElementById('btn-entrar-plataforma').addEventListener('click', verifyGmailAccount);
@@ -261,7 +252,7 @@
             document.getElementById('tab-jogar-btn').addEventListener('click', () => changeTab('jogar'));
             document.getElementById('tab-arena-btn').addEventListener('click', () => changeTab('arena'));
             document.getElementById('tab-ranking-btn').addEventListener('click', () => changeTab('ranking'));
-            document.getElementById('tab-config-btn').addEventListener('click', () => changeView('config'));
+            document.getElementById('tab-config-btn').addEventListener('click', () => changeTab('config'));
             document.getElementById('music-trigger').addEventListener('click', toggleBackgroundTrack);
             document.getElementById('call-join-trigger').addEventListener('click', connectJitsiVoice);
             document.getElementById('call-leave-trigger').addEventListener('click', disconnectJitsiVoice);
@@ -274,15 +265,18 @@
                 if (e.key === 'Enter') pushOnlineMessage();
             });
             
-            // Inicializa a árvore do jogo no painel
+            // Inicializa a árvore do jogo no painel principal
             loadStoryNode('start');
         });
 
         function verifyServerKey() {
-            if(document.getElementById('server-pass-input').value === "2020") {
+            const passValue = document.getElementById('server-pass-input').value;
+            if(passValue === "2020") {
                 document.getElementById('step-1-box').style.display = 'none';
                 document.getElementById('step-2-box').style.display = 'flex';
-            } else { alert("Acesso Negado: Código incorreto."); }
+            } else { 
+                alert("Acesso Negado: Código do servidor incorreto."); 
+            }
         }
 
         function verifyGmailAccount() {
@@ -294,29 +288,32 @@
                 return;
             }
             if(pass.length < 4) {
-                alert("Sua senha local deve conter no menos 4 dígitos.");
+                alert("A sua senha local deve conter pelo menos 4 dígitos.");
                 return;
             }
 
             currentEmail = email.replace(/[^a-zA-Z0-9]/g, "_");
             document.getElementById('lock-screen').style.display = 'none';
-
-            // Cria ou recupera o herói de forma segura no servidor central
-            dbPlayers.get(currentEmail).once((user) => {
-                if(!user) {
-                    let chatNick = prompt("Digite seu apelido exclusivo do Chat:");
-                    let gameNick = prompt("Digite o nome do seu Herói do RPG:");
-                    dbPlayers.get(currentEmail).put({
-                        email: email,
-                        profileName: chatNick || "Membro",
-                        gameName: gameNick || "Guerreiro",
-                        wins: 0, losses: 0, heartbeat: Date.now()
-                    });
-                } else {
-                    dbPlayers.get(currentEmail).update({ heartbeat: Date.now() });
+            
+            // Inicializa a conta isolada na memória local/nuvem híbrida
+            let localDataset = localStorage.getItem(currentEmail);
+            if (!localDataset) {
+                let chatNick = prompt("Digite seu apelido exclusivo do Chat:");
+                let gameNick = prompt("Digite o nome do seu Herói do RPG:");
+                localStorage.setItem(currentEmail, JSON.stringify({
+                    email: email,
+                    profileName: chatNick || "Membro",
+                    gameName: gameNick || "Guerreiro",
+                    wins: 0, losses: 0, messages: []
+                }));
+                
+                let directory = JSON.parse(localStorage.getItem('liner_idx')) || [];
+                if(!directory.includes(currentEmail)) {
+                    directory.push(currentEmail);
+                    localStorage.setItem('liner_idx', JSON.stringify(directory));
                 }
-                syncLinerNetwork();
-            });
+            }
+            startLiveSyncing();
         }
 
         function changeTab(panelName) {
@@ -324,186 +321,5 @@
             document.querySelectorAll('.sidebar .nav-btn').forEach(b => b.classList.remove('active'));
             document.getElementById('panel-' + panelName).classList.add('active-panel');
             document.getElementById('tab-' + panelName + '-btn').classList.add('active');
+            refreshInterfaceData();
         }
-
-        function changeView(t) { changeTab(t); }
-
-        // Sincronização em Tempo Real via Nuvem Descentralizada
-        function syncLinerNetwork() {
-            const chatFlow = document.getElementById('chat-flow');
-            
-            // Ouvinte de mensagens online globais
-            dbChat.map().on((msg, id) => {
-                if(msg && !document.getElementById(id)) {
-                    const box = document.createElement('div');
-                    box.className = 'message-row';
-                    box.id = id;
-                    box.innerHTML = `<div class="user-avatar">${msg.author.substring(0,2)}</div><div><strong>${msg.author}</strong><div class="message-text">${msg.text}</div></div>`;
-                    chatFlow.appendChild(box);
-                    chatFlow.scrollTop = chatFlow.scrollHeight;
-                }
-            });
-
-            // Atualização contínua do Placar de Líderes e da Arena Online
-            setInterval(() => {
-                if(currentEmail) dbPlayers.get(currentEmail).update({ heartbeat: Date.now() });
-                buildLeaderboardAndArena();
-            }, 4000);
-
-            // Ouvinte de convites/resultados de duelos PVP online
-            dbDuels.map().on((duel) => {
-                if(duel && duel.target === currentEmail && duel.status === "pending") {
-                    executePvpMatch(duel);
-                }
-            });
-
-            dbPlayers.get(currentEmail).once((d) => {
-                if(d) {
-                    document.getElementById('config-profile-name').value = d.profileName;
-                    document.getElementById('config-game-name').value = d.gameName;
-                }
-            });
-        }
-
-        function buildLeaderboardAndArena() {
-            let activeList = [];
-            const now = Date.now();
-
-            dbPlayers.map().once((player) => {
-                if(player && player.email) {
-                    activeList.push(player);
-                    activeList = activeList.filter((v, i, a) => a.findIndex(t => t.email === v.email) === i);
-                    
-                    // Renderiza Placar de Líderes
-                    const sortedLeaderboard = [...activeList].sort((alpha, beta) => beta.wins - alpha.wins);
-                    const rankContainer = document.getElementById('ranking-rows-container');
-                    // Renderiza Arena PVP (Apenas quem enviou sinal nos últimos 12 segundos)
-                    const arenaContainer = document.getElementById('arena-online-list');
-                    arenaContainer.innerHTML = "";
-                    activeList.forEach((p) => {
-                        const pId = p.email.replace(/[^a-zA-Z0-9]/g, "_");
-                        if(p.heartbeat && (now - p.heartbeat < 12000) && pId !== currentEmail) {
-                            arenaContainer.innerHTML += `
-                                <div class="pvp-user-card">
-                                    <span>⚔️ <b>${p.gameName}</b></span>
-                                    <button class="duel-btn" data-opponent="${pId}">Desafiar</button>
-                                </div>`;
-                        }
-                    });
-
-                    // Amarra o evento de clique nos novos botões gerados na lista
-                    document.querySelectorAll('.duel-btn').forEach(btn => {
-                        btn.addEventListener('click', function() {
-                            sendPvpChallenge(this.getAttribute('data-opponent'));
-                        });
-                    });
-
-                    if(arenaContainer.innerHTML === "") {
-                        arenaContainer.innerHTML = "<div style='color:var(--text-muted); font-size:13px;'>Nenhum oponente online na arena neste minuto...</div>";
-                    }
-                }
-            });
-        }
-
-        // Sistema Dinâmico de Luta PVP Real (Contra quem está conectado)
-        function sendPvpChallenge(opponentId) {
-            dbPlayers.get(currentEmail).once((me) => {
-                const duelId = "duel_" + Date.now();
-                dbDuels.get(duelId).put({
-                    id: duelId, attacker: currentEmail, attackerName: me.gameName,
-                    target: opponentId, status: "pending", timestamp: Date.now()
-                });
-                document.getElementById('arena-battle-log').innerHTML += `<br><span style='color:var(--cyan-glow);'>[SISTEMA]</span> Convite de duelo enviado para a rede...`;
-            });
-        }
-
-        function executePvpMatch(duel) {
-            dbDuels.get(duel.id).put({ status: "resolved" });
-            dbPlayers.get(currentEmail).once((me) => {
-                const log = document.getElementById('arena-battle-log');
-                const myRoll = Math.floor(Math.random() * 20) + 1;
-                const oppRoll = Math.floor(Math.random() * 20) + 1;
-                
-                log.innerHTML += `<br>⚔️ <b>Duelo Iniciado!</b> Você contra ${duel.attackerName}`;
-                log.innerHTML += `<br>🎲 Seu dado d20: ${myRoll} | Dado de ${duel.attackerName}: ${oppRoll}`;
-
-                if(myRoll >= oppRoll) {
-                    let w = (me.wins || 0) + 1;
-                    dbPlayers.get(currentEmail).put({ wins: w });
-                    log.innerHTML += `<br><span style='color:#2ecc71;'>[VITÓRIA]</span> Você superou o ataque inimigo!`;
-                } else {
-                    let l = (me.losses || 0) + 1;
-                    dbPlayers.get(currentEmail).put({ losses: l });
-                    log.innerHTML += `<br><span style='color:#ff4d4d;'>[DERROTA]</span> Você foi derrotado no contra-ataque.`;
-                }
-                log.scrollTop = log.scrollHeight;
-            });
-        }
-
-        // Lógica das Campanhas do Modo História (RP)
-        function loadStoryNode(nodeId) {
-            const node = storyCampaign[nodeId];
-            if(!node) return;
-
-            document.getElementById('story-chapter-title').innerText = node.title;
-            document.getElementById('story-display-text').innerText = node.text;
-            
-            const choicesBox = document.getElementById('story-choices-box');
-            choicesBox.innerHTML = "";
-            
-            node.choices.forEach(c => {
-                const btn = document.createElement('button');
-                btn.className = 'choice-btn';
-                btn.innerText = c.text;
-                btn.addEventListener('click', () => loadStoryNode(c.next));
-                choicesBox.appendChild(btn);
-            });
-        }
-
-        function pushOnlineMessage() {
-            const input = document.getElementById('chat-input');
-            const text = input.value.trim();
-            if(!text) return;
-
-            dbPlayers.get(currentEmail).once((user) => {
-                const mId = "m_" + Date.now() + "_" + Math.random().toString(36).substr(2,4);
-                dbChat.get(mId).put({ author: user.profileName, text: text });
-                input.value = "";
-            });
-        }
-
-        function connectJitsiVoice() {
-            if(typeof JitsiMeetExternalAPI === 'undefined') { alert("Aguarde a rede inicializar."); return; }
-            const box = document.getElementById('voice-box'); box.style.display = 'block'; box.innerHTML = "";
-            document.getElementById('call-join-trigger').style.display = 'none';
-            document.getElementById('call-leave-trigger').style.display = 'block';
-            jitsiAPI = new JitsiMeetExternalAPI("meet.jit.si", { roomName: "Liner_Network_Ultra_Voice_2026_Secure", width: "100%", height: "100%", parentNode: box });
-        }
-
-        function disconnectJitsiVoice() {
-            document.getElementById('voice-box').style.display = 'none';
-            document.getElementById('call-join-trigger').style.display = 'block';
-            document.getElementById('call-leave-trigger').style.display = 'none';
-            if(jitsiAPI) jitsiAPI.dispose();
-        }
-
-        function toggleBackgroundTrack() {
-            const t = document.getElementById('bg-music');
-            t.paused ? t.play().catch(()=>{}) : t.pause();
-        }
-        function switchInterfaceColors() { document.body.classList.toggle('light-mode'); }
-        
-        function saveCloudSettings() {
-            const p = document.getElementById('config-profile-name').value;
-            const g = document.getElementById('config-game-name').value;
-            dbPlayers.get(currentEmail).put({ profileName: p, gameName: g });
-            alert("Nuvem Atualizada!");
-        }
-        
-        function disconnectUserSession() { 
-            currentEmail = ""; 
-            document.getElementById('lock-screen').style.display = 'flex'; 
-        }
-    </script>
-</body>
-</html>
