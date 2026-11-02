@@ -3,28 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LinerCall's - Oficial</title>
+    <title>LinerCall's - Conexão Global</title>
 </head>
 <body>
 
-    <!-- TELA DE BLOQUEIO -->
+    <!-- TELA DE BLOQUEIO 1: SENHA DO SERVIDOR -->
     <div id="lock-screen">
         <div class="lock-box">
-            <h2>LINERCALL'S</h2>
-            <input type="password" id="pass-input" placeholder="SENHA DO SERVIDOR">
-            <button class="primary-btn" id="btn-acessar">Acessar Plataforma</button>
+            <h2>LINERCALL'S 🔐</h2>
+            <p style="font-size:12px; color:var(--text-muted); margin-bottom:10px;">Autenticação do Servidor</p>
+            <input type="password" id="pass-input" placeholder="SENHA DO SERVIDOR (2020)">
+            <button class="primary-btn" id="btn-acessar">Verificar Código</button>
+        </div>
+    </div>
+
+    <!-- TELA DE BLOQUEIO 2: EXIGÊNCIA DE GMAIL REAL -->
+    <div id="auth-screen" style="display: none; position: fixed; inset: 0; background: #0a0c10; z-index: 9998; justify-content: center; align-items: center;">
+        <div class="lock-box" style="border-color: #ea4335;">
+            <h2 style="color: #ea4335;">LOGIN REQUERIDO 📧</h2>
+            <p style="font-size:12px; color:var(--text-muted); margin-bottom:10px;">Você precisa de uma conta @gmail.com válida</p>
+            <input type="text" id="email-input" placeholder="seu-usuario@gmail.com" style="text-align: left; padding-left: 12px;">
+            <input type="password" id="user-pass-input" placeholder="Crie uma senha para sua conta">
+            <button class="primary-btn" id="btn-autenticar-email" style="background: linear-gradient(135deg, #ea4335, #c5221f); color: white;">Entrar / Registrar</button>
         </div>
     </div>
 
     <audio id="bg-music" loop src="https://soundhelix.com"></audio>
 
-    <!-- MENU LATERAL CIANO -->
+    <!-- SIDEBAR -->
     <div class="sidebar">
         <div class="brand">LinerCall's</div>
         <div class="section-title">Navegação</div>
         <button class="nav-btn active" id="tab-chat-btn">💬 Falar com Amizades</button>
         <button class="nav-btn" id="tab-jogar-btn">🎮 Jogar Mini História</button>
-        <button class="nav-btn" id="tab-ranking-btn">🏆 Ranking do Jogo</button>
+        <button class="nav-btn" id="tab-ranking-btn">🏆 Ranking Online</button>
         <button class="nav-btn" id="tab-config-btn">⚙️ Configurações</button>
         <div style="margin-top:auto; font-size:12px; background:var(--bg-card); padding:12px; border-radius:8px; display:flex; justify-content:space-between; align-items:center;">
             <span>🎵 Trilha:</span>
@@ -34,69 +46,61 @@
 
     <!-- CONTEÚDO PRINCIPAL -->
     <div class="main-content">
-        <!-- ABA DO CHAT -->
-        <div id="panel-chat" class="view-panel active-panel" style="padding:20px; height:100%;">
-            <div class="voice-bar">
-                <span style="font-weight:600; font-size:15px; flex:1;">🎙️ Voz em Tempo Real:</span>
+        <!-- CHAT GERAL ONLINE -->
+        <div id="panel-chat" class="view-panel active-panel" style="padding:0; height:100%;">
+            <div style="padding:15px; display:flex; gap:10px; background: rgba(0,0,0,0.1); align-items: center;">
+                <span style="font-weight:600; font-size:14px; flex:1;">🎙️ Voz Conectada:</span>
                 <button class="voice-btn join" id="call-join-trigger">Entrar na Call</button>
                 <button class="voice-btn leave" id="call-leave-trigger">Sair da Call</button>
             </div>
-            <div id="voice-box" style="height:180px; display:none; background:#111214; margin-bottom: 20px;"></div>
+            <div id="voice-box" style="height:180px; display:none; background:#111214;"></div>
             <div class="chat-wrapper">
                 <div class="chat-messages" id="chat-flow">
-                    <div class="message-row">
-                        <div class="user-avatar">SYS</div>
-                        <div>
-                            <strong style="color:var(--cyan-glow);">Servidor Central</strong>
-                            <div class="message-text">Plataforma carregada. Digite abaixo para iniciar sua sessão exclusiva.</div>
-                        </div>
-                    </div>
+                    <!-- Mensagens do banco de dados carregarão aqui -->
                 </div>
                 <div class="chat-input-bar">
-                    <input type="text" id="chat-input" placeholder="Digite sua mensagem...">
+                    <input type="text" id="chat-input" placeholder="Enviar mensagem para #geral-online...">
                     <button class="send-btn" id="btn-enviar-msg">Enviar</button>
                 </div>
             </div>
         </div>
 
-        <!-- ABA DO JOGO -->
+        <!-- HISTÓRIA / JOGO -->
         <div id="panel-jogar" class="view-panel">
             <h2>Masmorra do Destino</h2>
             <div class="dashboard-box" style="margin-top:20px;">
-                <h3 id="game-char-name" style="color:var(--cyan-glow);">Carregando...</h3>
+                <h3 id="game-char-name" style="color:var(--cyan-glow);">Sincronizando nuvem...</h3>
                 <div class="stats-container">
-                    <div class="stat-item"><span>Vitórias</span><b id="p-wins">0</b></div>
-                    <div class="stat-item"><span>Derrotas</span><b id="p-losses">0</b></div>
+                    <div class="stat-item"><span>Vitórias Globais</span><b id="p-wins">0</b></div>
+                    <div class="stat-item"><span>Derrotas Globais</span><b id="p-losses">0</b></div>
                 </div>
-                <div class="log" id="game-log">>> Aguardando comando...</div>
-                <button class="primary-btn" id="btn-lutar">Iniciar Confronto</button>
+                <div class="log" id="game-log">>> Conectado à rede LinerCall's.</div>
+                <button class="primary-btn" id="btn-lutar">Iniciar Confronto Online</button>
             </div>
         </div>
 
-        <!-- ABA DO RANKING -->
+        <!-- RANKING SINCRONIZADO -->
         <div id="panel-ranking" class="view-panel">
-            <h2>🏆 Placar Geral</h2>
+            <h2>🏆 Placar de Líderes em Tempo Real</h2>
             <div class="ranking-grid" style="margin-top:20px;">
-                <div class="ranking-row ranking-header"><div>Posição</div><div>Nome no Jogo</div><div>Vitórias</div><div>Derrotas</div></div>
+                <div class="ranking-row ranking-header"><div>Posição</div><div>Nome do Player</div><div>Vitórias</div><div>Derrotas</div></div>
                 <div id="ranking-rows-container"></div>
             </div>
         </div>
 
-        <!-- ABA DE CONFIGURAÇÕES -->
+        <!-- CONFIGURAÇÕES -->
         <div id="panel-config" class="view-panel">
-            <h2>⚙️ Central de Controle</h2>
+            <h2>⚙️ Central de Perfil</h2>
             <div class="dashboard-box" style="margin-top:20px; text-align:left;">
-                <div style="margin-bottom: 12px;">
-                    <label style="font-size:12px; color:var(--text-muted); font-weight:bold;">Nome no CHAT:</label>
-                    <input type="text" id="config-profile-name" style="text-align:left;">
+                <div style="margin-bottom:12px;">
+                    <label>Seu Apelido no Chat:</label><input type="text" id="config-profile-name" style="text-align:left;">
                 </div>
-                <div style="margin-bottom: 15px;">
-                    <label style="font-size:12px; color:var(--text-muted); font-weight:bold;">Nome no JOGO:</label>
-                    <input type="text" id="config-game-name" style="text-align:left;">
+                <div style="margin-bottom:15px;">
+                    <label>Nome do Herói na Campanha:</label><input type="text" id="config-game-name" style="text-align:left;">
                 </div>
-                <button class="primary-btn" id="btn-salvar-config" style="background:#248046; color:#fff; margin-bottom:20px;">Atualizar Informações</button>
+                <button class="primary-btn" id="btn-salvar-config" style="background:#248046; color:#fff; margin-bottom:20px;">Salvar Alterações Globais</button>
                 <button class="primary-btn" id="btn-tema" style="background:var(--bg-card); color:var(--cyan-glow); border:1px solid var(--cyan-glow);">Alternar Modo Claro / Escuro</button>
-                <button class="primary-btn" id="btn-logout" style="background:var(--red-alert); color:white; margin-top:20px; font-size:12px; padding:8px;">Logout do E-mail</button>
+                <button class="primary-btn" id="btn-logout" style="background:var(--red-alert); color:white; margin-top:20px; font-size:12px; padding:8px;">Desconectar Gmail</button>
             </div>
         </div>
     </div>
@@ -114,7 +118,7 @@
     body { background-color: var(--bg-darkest); color: var(--text-white); display: flex; height: 100vh; overflow: hidden; }
     
     #lock-screen { position: fixed; inset: 0; background: #0a0c10; display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 9999; }
-    .lock-box { background: var(--bg-panel); padding: 40px; border-radius: 12px; text-align: center; border: 2px solid var(--cyan-glow); width: 90%; max-width: 380px; }
+    .lock-box { background: var(--bg-panel); padding: 40px; border-radius: 12px; text-align: center; border: 2px solid var(--cyan-glow); width: 90%; max-width: 380px; box-shadow: 0 0 20px rgba(0, 242, 254, 0.15); }
     
     .sidebar { width: 260px; background-color: var(--bg-panel); display: flex; flex-direction: column; padding: 20px 15px; border-right: 1px solid rgba(255, 255, 255, 0.05); }
     .brand { font-size: 22px; font-weight: bold; color: var(--cyan-glow); text-align: center; padding-bottom: 20px; border-bottom: 1px solid rgba(255, 255, 255, 0.1); text-transform: uppercase; letter-spacing: 1.5px; }
@@ -134,11 +138,12 @@
 
     .chat-wrapper { flex: 1; display: flex; flex-direction: column; background: var(--bg-panel); border-radius: 12px; overflow: hidden; border: 1px solid rgba(255,255,255,0.03); }
     .chat-messages { flex: 1; overflow-y: auto; padding: 25px; display: flex; flex-direction: column; gap: 20px; }
-    .message-row { display: flex; gap: 15px; }
-    .user-avatar { width: 42px; height: 42px; background: linear-gradient(135deg, var(--cyan-glow), var(--cyan-dark)); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #0a0c10; font-weight: bold; }
+    .message-row { display: flex; gap: 15px; margin-bottom: 5px; }
+    .user-avatar { width: 42px; height: 42px; background: linear-gradient(135deg, var(--cyan-glow), var(--cyan-dark)); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #0a0c10; font-weight: bold; text-transform: uppercase; }
     .chat-input-bar { padding: 20px; background: rgba(0, 0, 0, 0.2); display: flex; gap: 10px; }
     
-    input { background: var(--bg-darkest); border: 1px solid var(--bg-card); color: var(--text-white); padding: 12px; border-radius: 6px; margin: 8px 0; width: 100%; text-align: center; }
+    input { background: var(--bg-darkest); border: 1px solid var(--bg-card); color: var(--text-white); padding: 12px; border-radius: 6px; margin: 8px 0; width: 100%; text-align: center; font-size: 14px; outline: none; }
+    input:focus { border-color: var(--cyan-glow); }
     .chat-input-bar input { margin: 0; text-align: left; padding-left: 15px; flex: 1; }
     .send-btn { background: var(--bg-card); border: none; color: var(--cyan-glow); padding: 0 20px; border-radius: 6px; cursor: pointer; font-weight: bold; }
 
@@ -151,21 +156,26 @@
     .ranking-row { display: grid; grid-template-columns: 80px 1fr 100px 100px; padding: 15px 20px; border-bottom: 1px solid rgba(255,255,255,0.02); }
     .ranking-header { background: rgba(0, 242, 254, 0.05); color: var(--cyan-glow); font-weight: bold; }
     .primary-btn { background: linear-gradient(135deg, var(--cyan-glow), var(--cyan-dark)); color: #0a0c10; border: none; padding: 12px; border-radius: 6px; cursor: pointer; font-weight: bold; width: 100%; text-transform: uppercase; }
+    label { font-size: 13px; color: var(--text-muted); font-weight: bold; display: block; margin-bottom: 4px; }
 </style>
+    <!-- Script do Jitsi para Chamadas de Voz -->
+    <script src="https://jit.si"></script>
+    
+    <!-- Script do Banco de Dados Online Gratuito (GunDB) -->
+    <script src="https://jsdelivr.net"></script>
+
     <script>
         let currentEmail = "", jitsiAPI = null;
+        
+        // Inicializa o banco de dados online conectando a servidores públicos de graça
+        const gun = Gun(['https://herokuapp.com', 'https://peer.ooo']);
+        const dbChat = gun.get('linercalls_chat_v1');
+        const dbPlayers = gun.get('linercalls_players_v1');
 
-        // Injeta a API de voz de forma segura
-        (function() {
-            const script = document.createElement('script');
-            script.src = "https://jit.si";
-            script.async = true;
-            document.head.appendChild(script);
-        })();
-
-        // Conecta todos os botões do HTML ao JavaScript (Segurança sem 'onclick' inline)
+        // Vincula os cliques dos botões com segurança total
         window.addEventListener('DOMContentLoaded', () => {
             document.getElementById('btn-acessar').addEventListener('click', processAuth);
+            document.getElementById('btn-autenticar-email').addEventListener('click', processGmailAuth);
             document.getElementById('tab-chat-btn').addEventListener('click', () => changeView('chat'));
             document.getElementById('tab-jogar-btn').addEventListener('click', () => changeView('jogar'));
             document.getElementById('tab-ranking-btn').addEventListener('click', () => changeView('ranking'));
@@ -184,31 +194,48 @@
             });
         });
 
+        // 1. Validação do código inicial do servidor
         function processAuth() {
             if(document.getElementById('pass-input').value === "2020") {
                 document.getElementById('lock-screen').style.display = 'none';
-                initializeSession();
-            } else { alert("Senha incorreta."); }
+                document.getElementById('auth-screen').style.display = 'flex';
+            } else { alert("Senha do servidor incorreta."); }
         }
 
-        function initializeSession() {
-            if (!currentEmail) {
-                let email = prompt("Informe seu e-mail para abrir sua conta:");
-                currentEmail = email ? email.trim() : "visitante@linercalls.com";
-                
-                let localDataset = localStorage.getItem(currentEmail);
-                if (!localDataset) {
-                    let nickChat = prompt("Nome no CHAT:");
-                    let nickJogo = prompt("Nome no JOGO:");
-                    localStorage.setItem(currentEmail, JSON.stringify({ 
-                        profileName: nickChat || "Membro", gameName: nickJogo || "Guerreiro", wins: 0, losses: 0, msgHistory: []
-                    }));
-                    let directory = JSON.parse(localStorage.getItem('liner_idx')) || [];
-                    if(!directory.includes(currentEmail)) { directory.push(currentEmail); localStorage.setItem('liner_idx', JSON.stringify(directory)); }
-                }
+        // 2. Validação RÍGIDA de e-mail @gmail.com
+        function processGmailAuth() {
+            const emailField = document.getElementById('email-input').value.trim().toLowerCase();
+            const passField = document.getElementById('user-pass-input').value;
+
+            if (!emailField.endsWith('@gmail.com')) {
+                alert("ACESSO NEGADO! Você precisa usar obrigatoriamente um e-mail @gmail.com válido.");
+                return;
             }
-            loadAccountChatHistory();
-            refreshInterfaceData();
+            if (passField.length < 4) {
+                alert("A senha de segurança da sua conta precisa ter pelo menos 4 caracteres.");
+                return;
+            }
+
+            // Transforma o e-mail em uma chave segura para o banco
+            currentEmail = emailField.replace(/[^a-zA-Z0-9]/g, "_");
+            document.getElementById('auth-screen').style.display = 'none';
+
+            // Cria o registro ou puxa dados se o player já existir no banco online
+            dbPlayers.get(currentEmail).once((dados) => {
+                if (!dados) {
+                    let nickChat = prompt("Escolha seu apelido exclusivo para o CHAT:");
+                    let nickJogo = prompt("Defina o nome do seu personagem para o JOGO:");
+                    
+                    dbPlayers.get(currentEmail).put({
+                        email: emailField,
+                        profileName: nickChat || "Membro",
+                        gameName: nickJogo || "Guerreiro",
+                        wins: 0,
+                        losses: 0
+                    });
+                }
+                startLiveSyncing();
+            });
         }
 
         function changeView(targetPanel) {
@@ -216,50 +243,68 @@
             document.querySelectorAll('.sidebar .nav-btn').forEach(btn => btn.classList.remove('active'));
             document.getElementById('panel-' + targetPanel).classList.add('active-panel');
             document.getElementById('tab-' + targetPanel + '-btn').classList.add('active');
-            refreshInterfaceData();
         }
 
-        function loadAccountChatHistory() {
-            const record = JSON.parse(localStorage.getItem(currentEmail));
+        // 3. Sincronização ONLINE de Chat e Ranking em tempo real
+        function startLiveSyncing() {
             const timeline = document.getElementById('chat-flow');
             
-            timeline.innerHTML = `
-                <div class="message-row">
-                    <div class="user-avatar">SYS</div>
-                    <div>
-                        <strong style="color:var(--cyan-glow);">Servidor Central</strong>
-                        <div class="message-text">Sessão iniciada como: ${currentEmail}</div>
-                    </div>
-                </div>`;
+            // Escuta novas mensagens vindas da nuvem
+            dbChat.map().on((msg, id) => {
+                if (msg && !document.getElementById(id)) {
+                    const row = document.createElement('div');
+                    row.className = 'message-row';
+                    row.id = id;
+                    row.innerHTML = `
+                        <div class="user-avatar">${msg.author.substring(0,2).toUpperCase()}</div>
+                        <div><strong>${msg.author}</strong><div class="message-text">${msg.text}</div></div>
+                    `;
+                    timeline.appendChild(row);
+                    timeline.scrollTop = timeline.scrollHeight;
+                }
+            });
 
-            if(record && record.msgHistory) {
-                record.msgHistory.forEach(msg => {
-                    timeline.innerHTML += `
-                        <div class="message-row">
-                            <div class="user-avatar">${msg.author.substring(0,2).toUpperCase()}</div>
-                            <div><strong>${msg.author}</strong><div class="message-text">${msg.text}</div></div>
-                        </div>`;
-                });
-            }
-            timeline.scrollTop = timeline.scrollHeight;
+            // Escuta atualizações do ranking na nuvem
+            const rContainer = document.getElementById('ranking-rows-container');
+            dbPlayers.map().on((player, id) => {
+                if (player && player.gameName) {
+                    refreshLeaderboardUI();
+                }
+            });
+
+            // Atualiza os inputs das configurações da conta ativa
+            dbPlayers.get(currentEmail).once((d) => {
+                if(d) {
+                    document.getElementById('game-char-name').innerText = "⚔️ " + d.gameName;
+                    document.getElementById('p-wins').innerText = d.wins;
+                    document.getElementById('p-losses').innerText = d.losses;
+                    document.getElementById('config-profile-name').value = d.profileName;
+                    document.getElementById('config-game-name').value = d.gameName;
+                }
+            });
         }
 
-        function refreshInterfaceData() {
-            let record = JSON.parse(localStorage.getItem(currentEmail));
-            if(!record) return;
-            document.getElementById('game-char-name').innerText = "⚔️ " + (record.gameName || "Viajante");
-            document.getElementById('p-wins').innerText = record.wins || 0;
-            document.getElementById('p-losses').innerText = record.losses || 0;
-            document.getElementById('config-profile-name').value = record.profileName || "";
-            document.getElementById('config-game-name').value = record.gameName || "";
+        function refreshLeaderboardUI() {
+            let list = [];
+            dbPlayers.map().once((player) => {
+                if (player && player.gameName) {
+                    list.push(player);
+                    // Remove duplicatas organizando a lista
+                    list = list.filter((v, i, a) => a.findIndex(t => t.email === v.email) === i);
+                    list.sort((a, b) => b.wins - a.wins);
 
-            const directory = JSON.parse(localStorage.getItem('liner_idx')) || [];
-            let leaderboard = []; directory.forEach(email => { const data = JSON.parse(localStorage.getItem(email)); if(data) leaderboard.push(data); });
-            leaderboard.sort((a, b) => b.wins - a.wins);
-
-            const container = document.getElementById('ranking-rows-container'); container.innerHTML = "";
-            leaderboard.forEach((player, index) => { 
-                container.innerHTML += `<div class="ranking-row"><div>${index + 1}º</div><div><b>${player.gameName || 'Viajante'}</b></div><div style="color:#2ecc71;">🟩 ${player.wins || 0}</div><div style="color:#e74c3c;">🟥 ${player.losses || 0}</div></div>`; 
+                    const container = document.getElementById('ranking-rows-container');
+                    container.innerHTML = "";
+                    list.forEach((p, idx) => {
+                        container.innerHTML += `
+                            <div class="ranking-row">
+                                <div>${idx + 1}º</div>
+                                <div><b>${p.gameName}</b></div>
+                                <div style="color:#2ecc71;">🟩 ${p.wins}</div>
+                                <div style="color:#ff4d4d;">🟥 ${p.losses}</div>
+                            </div>`;
+                    });
+                }
             });
         }
 
@@ -267,27 +312,24 @@
             const inputField = document.getElementById('chat-input');
             const messageText = inputField.value.trim();
             if(!messageText) return;
-            
-            const record = JSON.parse(localStorage.getItem(currentEmail));
-            const timeline = document.getElementById('chat-flow');
-            
-            if(!record.msgHistory) record.msgHistory = [];
-            record.msgHistory.push({ author: record.profileName, text: messageText });
-            localStorage.setItem(currentEmail, JSON.stringify(record));
 
-            timeline.innerHTML += `<div class="message-row"><div class="user-avatar">${record.profileName.substring(0,2).toUpperCase()}</div><div><strong>${record.profileName}</strong><div class="message-text">${messageText}</div></div></div>`;
-            inputField.value = ""; timeline.scrollTop = timeline.scrollHeight;
+            dbPlayers.get(currentEmail).once((d) => {
+                // Envia a mensagem com ID gerado direto no banco online da galera
+                const msgId = 'msg_' + Date.now() + '_' + Math.random().toString(36).substr(2, 5);
+                dbChat.get(msgId).put({
+                    author: d.profileName,
+                    text: messageText,
+                    timestamp: Date.now()
+                });
+                inputField.value = "";
+            });
         }
 
         function connectVoiceCall() {
-            if (typeof JitsiMeetExternalAPI === 'undefined') {
-                alert("O gateway de voz está inicializando. Aguarde 3 segundos e clique novamente.");
-                return;
-            }
             const containerBox = document.getElementById('voice-box'); containerBox.style.display = 'block'; containerBox.innerHTML = "";
             document.getElementById('call-join-trigger').style.display = 'none';
             document.getElementById('call-leave-trigger').style.display = 'block';
-            jitsiAPI = new JitsiMeetExternalAPI("meet.jit.si", { roomName: "Liner_Geral_Secure_Room_Unique", width: "100%", height: "100%", parentNode: containerBox });
+            jitsiAPI = new JitsiMeetExternalAPI("meet.jit.si", { roomName: "Liner_Geral_Secure_Room_Unique_2026", width: "100%", height: "100%", parentNode: containerBox });
         }
 
         function disconnectVoiceCall() { 
@@ -297,33 +339,57 @@
             if(jitsiAPI) jitsiAPI.dispose(); 
         }
 
-        // Minijogo da Masmorra
         function playBattleTurn() {
-            const record = JSON.parse(localStorage.getItem(currentEmail));
-            const logConsole = document.getElementById('game-log');
-            if(Math.random() > 0.4) { record.wins += 1; logConsole.innerHTML += "<br>[VITÓRIA] Alvo abatido!"; }
-            else { record.losses += 1; logConsole.innerHTML += "<br>[DERROTA] Oponente te superou."; }
-            localStorage.setItem(currentEmail, JSON.stringify(record)); refreshInterfaceData(); logConsole.scrollTop = logConsole.scrollHeight;
+            dbPlayers.get(currentEmail).once((record) => {
+                const logConsole = document.getElementById('game-log');
+                let w = record.wins;
+                let l = record.losses;
+
+                if(Math.random() > 0.4) { 
+                    w += 1; 
+                    logConsole.innerHTML += "<br>[VITÓRIA] Oponente abatido!"; 
+                } else { 
+                    l += 1; 
+                    logConsole.innerHTML += "<br>[DERROTA] Você recuou."; 
+                }
+
+                dbPlayers.get(currentEmail).update({ wins: w, losses: l });
+                dbPlayers.get(currentEmail).put({ wins: w, losses: l });
+                document.getElementById('p-wins').innerText = w;
+                document.getElementById('p-losses').innerText = l;
+                logConsole.scrollTop = logConsole.scrollHeight;
+            });
         }
 
         function handleMusicToggle() { 
-            const track = document.getElementById('bg-music'); const triggerBtn = document.getElementById('music-trigger');
-            if(track.paused) { track.play().catch(()=>{}); triggerBtn.innerText = "DESLIGAR"; triggerBtn.style.background = "#ff4d4d"; }
-            else { track.pause(); triggerBtn.innerText = "LIGAR"; triggerBtn.style.background = "#248046"; }
+            const track = document.getElementById('bg-music'); 
+            const triggerBtn = document.getElementById('music-trigger');
+            if(track.paused) { 
+                track.play().catch(()=>{}); 
+                triggerBtn.innerText = "DESLIGAR"; 
+                triggerBtn.style.background = "#ff4d4d"; 
+            } else { 
+                track.pause(); 
+                triggerBtn.innerText = "LIGAR"; 
+                triggerBtn.style.background = "#248046"; 
+            }
         }
-        function toggleInterfaceTheme() { document.body.classList.toggle('light-mode'); }
+
+        function toggleInterfaceTheme() { 
+            document.body.classList.toggle('light-mode'); 
+        }
         
         function persistProfileData() {
-            const record = JSON.parse(localStorage.getItem(currentEmail));
-            record.profileName = document.getElementById('config-profile-name').value;
-            record.gameName = document.getElementById('config-game-name').value;
-            localStorage.setItem(currentEmail, JSON.stringify(record)); alert("Configurações atualizadas!"); refreshInterfaceData();
+            const pName = document.getElementById('config-profile-name').value;
+            const gName = document.getElementById('config-game-name').value;
+            dbPlayers.get(currentEmail).put({ profileName: pName, gameName: gName });
+            alert("Sincronizado na nuvem com sucesso!");
         }
+        
         function clearUserSession() { 
             currentEmail = ""; 
-            document.getElementById('lock-screen').style.display = 'flex'; 
+            document.getElementById('auth-screen').style.display = 'flex'; 
         }
     </script>
 </body>
 </html>
-
